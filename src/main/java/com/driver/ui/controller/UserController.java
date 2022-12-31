@@ -1,5 +1,6 @@
 package com.driver.ui.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -79,7 +80,14 @@ public class UserController {
 	@GetMapping()
 	public List<UserResponse> getUsers(){
 
-		return null;
+		List<UserResponse> userDetailsResponses = new ArrayList<>();
+		List<UserDto> userDtoList = userService.getUsers();
+		for(UserDto userDto:userDtoList){
+			UserResponse userResponse = new UserResponse();
+			BeanUtils.copyProperties(userDto,userResponse);
+			userDetailsResponses.add(userResponse);
+		}
+		return userDetailsResponses;
 	}
 	
 }

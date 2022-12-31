@@ -1,13 +1,16 @@
 package com.driver.service.impl;
 
+import com.driver.io.entity.FoodEntity;
 import com.driver.io.entity.UserEntity;
 import com.driver.io.repository.UserRepository;
 import com.driver.service.UserService;
+import com.driver.shared.dto.FoodDto;
 import com.driver.shared.dto.UserDto;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
@@ -56,8 +59,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDto> getUsers() {
-        List<UserEntity> userEntityList = (List<UserEntity>) userRepository.findAll();
+        List<UserDto> userDtoList = new ArrayList();
+        List<UserEntity> userList;
+        userList = (List<UserEntity>) userRepository.findAll();
 
-        return null;
+        for(UserEntity user : userList){
+            UserDto userDto = new UserDto();
+            BeanUtils.copyProperties(user, userDto);
+            userDtoList.add(userDto);
+        }
+        return userDtoList;
     }
 }

@@ -11,6 +11,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 @Service
 public class OrderServiceImpl implements OrderService{
@@ -52,6 +53,16 @@ public class OrderServiceImpl implements OrderService{
 
     @Override
     public List<OrderDto> getOrders() {
-        return null;
+
+        List<OrderDto> orderDtoList = new ArrayList();
+        List<OrderEntity> orderList;
+        orderList = (List<OrderEntity>) orderRepository.findAll();
+
+        for(OrderEntity order : orderList){
+            OrderDto orderDto = new OrderDto();
+            BeanUtils.copyProperties(order, orderDto);
+            orderDtoList.add(orderDto);
+        }
+        return orderDtoList;
     }
 }

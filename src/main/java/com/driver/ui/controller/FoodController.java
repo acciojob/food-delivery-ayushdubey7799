@@ -82,7 +82,11 @@ public class FoodController {
 	public List<FoodDetailsResponse> getFoods() {
         List<FoodDetailsResponse> foodDetailsResponses = new ArrayList<>();
 		List<FoodDto> foodDtoList = foodService.getFoods();
-		BeanUtils.copyProperties(foodDtoList,foodDetailsResponses);
+		for(FoodDto foodDto:foodDtoList){
+			FoodDetailsResponse foodDetailsResponse = new FoodDetailsResponse();
+			BeanUtils.copyProperties(foodDto,foodDetailsResponse);
+			foodDetailsResponses.add(foodDetailsResponse);
+		}
 		return foodDetailsResponses;
 	}
 }

@@ -1,11 +1,13 @@
 package com.driver.ui.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 import com.driver.model.request.OrderDetailsRequestModel;
 import com.driver.model.response.*;
 import com.driver.service.impl.OrderServiceImpl;
+import com.driver.shared.dto.FoodDto;
 import com.driver.shared.dto.OrderDto;
 import com.driver.shared.dto.UserDto;
 import org.springframework.beans.BeanUtils;
@@ -78,7 +80,14 @@ public class OrderController {
 	
 	@GetMapping()
 	public List<OrderDetailsResponse> getOrders() {
-		
-		return null;
+
+		List<OrderDetailsResponse> orderDetailsResponses = new ArrayList<>();
+		List<OrderDto> orderDtoList = orderService.getOrders();
+		for(OrderDto orderDto:orderDtoList){
+			OrderDetailsResponse orderDetailsResponse = new OrderDetailsResponse();
+			BeanUtils.copyProperties(orderDto,orderDetailsResponse);
+			orderDetailsResponses.add(orderDetailsResponse);
+		}
+		return orderDetailsResponses;
 	}
 }
