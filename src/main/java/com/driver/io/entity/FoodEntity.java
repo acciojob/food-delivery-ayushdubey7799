@@ -1,12 +1,18 @@
 package com.driver.io.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+
 import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity(name = "foods")
 public class FoodEntity{
 	@Id
